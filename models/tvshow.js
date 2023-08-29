@@ -16,14 +16,13 @@ const tvshowSchema = new Schema({
   },
   end_year: {
     type: Number,
-    required: true,
   },
   seasons: {
     type: Number,
     required: true,
   },
   genre: {
-    type: [String],
+    type: [String], // Array
     required: true,
   },
   rating: {

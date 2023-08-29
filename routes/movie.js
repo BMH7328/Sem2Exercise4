@@ -76,4 +76,44 @@ router.delete("/:id", async (req, res) => {
   res.send(deletedMovie);
 });
 
+/* method 1 - nested schema */
+// post review
+router.post("/:id/reviews", async (req, res) => {
+  try {
+    // get movie id
+    const movie_id = req.params.id;
+    // find the movie
+    const movie = await Movie.findById(movie_id);
+
+    // create a new review and add it to the movie's reviews field
+    const newReview = {
+      username: req.body.username,
+      email: req.body.email,
+      content: req.body.content,
+      rating: req.body.rating,
+    };
+    movie.reviews.push(newReview);
+
+    // save the movie data
+    await movie.save();
+    // send out the review data
+    res.status(200).send(newReview);
+  } catch (error) {
+    res.status(400).send({ message: error._message });
+  }
+});
+
+// get one movie's review
+router.get("/:id/reviews", async (req, res) => {
+  try {
+    // get movie id
+    const movie_id = req.params.id;
+    // find the movie
+    const movie = await Movie.findById(movie_id);
+    res.status(200).send(movie.reviews);
+  } catch (error) {
+    res.status(400).send({ message: error._message });
+  }
+});
+
 module.exports = router;

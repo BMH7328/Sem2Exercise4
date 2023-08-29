@@ -16,9 +16,11 @@ mongoose
 // routes
 const movieRouter = require("./routes/movie");
 const tvshowRouter = require("./routes/tvshow");
+const newreviewRouter = require("./routes/newreview");
 
 app.use("/movies", movieRouter);
 app.use("/tvshows", tvshowRouter);
+app.use("/reviews", newreviewRouter);
 
 app.get("/", (req, res) => {
   res.send("<a href='/movies'>Movies</a>");
